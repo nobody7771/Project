@@ -427,3 +427,48 @@ footer {
     color: #e50707;
     font-weight: bold;
 }
+
+/* --- Admin Dashboard --- */
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.add-btn {
+    background: green;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+}
+
+.admin-table th, .admin-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.admin-table th {
+    background: #333;
+    color: white;
+}
+
+.delete-btn {
+    background: red;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 0.9rem;
+}
