@@ -1,6 +1,6 @@
 <?php
-session_start(); // Start session to remember the user
-include 'db.php'; // Connect to database
+session_start();
+include 'db.php';
 
 $error = "";
 
@@ -8,20 +8,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $conn->real_escape_string($_POST['username']);
     $password = $_POST['password'];
 
-    // 1. Check if username exists
     $sql = "SELECT * FROM users WHERE username = '$username'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         
-        // 2. Verify the encrypted password
         if (password_verify($password, $row['password'])) {
-            // Success! Log them in
+            // Set session variables
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['username'] = $row['username'];
-            header("Location: Home.php"); // Redirect to Home
+
+            // --- ADMIN CHECK ---
+            if ($row['username'] === 'admin') {
+                header("Location: admin.php"); // Go to Dashboard
+            } else {
+                header("Location: Home.php"); // Go to Normal Home
+            }
             exit;
+            
         } else {
             $error = "Invalid password!";
         }
@@ -37,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameStore - Login</title>
-    <link rel="stylesheet" href="stylesheet.css?v=2">
+    <link rel="stylesheet" href="stylesheet.css?v=7">
 </head>
 <body>
 
