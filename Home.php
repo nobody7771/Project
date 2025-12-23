@@ -2,10 +2,8 @@
 session_start(); 
 include 'db.php'; 
 
-// CHANGED: We removed the PHP Search logic. 
-// Now we simply select ALL games, and JS filters them visually.
-$sql = "SELECT * FROM games";
-$result = $conn->query($sql);
+// Fetch all games immediately
+$result = $conn->query("SELECT * FROM games");
 ?>
 
 <!DOCTYPE html>
@@ -41,33 +39,27 @@ $result = $conn->query($sql);
         <br>
         
         <div class="search-container">
-            <input type="text" 
-                   id="search-input" 
-                   class="search"
-                   placeholder="Search games..." 
-                   onkeyup="liveSearch()">
+            <input type="text" id="search-input" class="search" placeholder="Search games..." onkeyup="liveSearch()">
         </div>
 
         <div class="game-grid">
-            <?php
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    ?>
+            <?php if ($result->num_rows > 0): ?>
+                <?php while($row = $result->fetch_assoc()): ?>
+                    
                     <article class="game-card">
-                        <img src="<?php echo $row['image_path']; ?>" alt="<?php echo $row['title']; ?>">
+                        <img src="<?= $row['image_path'] ?>" alt="<?= $row['title'] ?>">
                         <div class="game-info">
-                            <h3><?php echo $row['title']; ?></h3>
-                            <p><?php echo $row['genre']; ?></p>
-                            <p><strong>$<?php echo $row['price']; ?></strong></p>
-                            <a href="details.php?id=<?php echo $row['id']; ?>" class="btn">View Details</a>
+                            <h3><?= $row['title'] ?></h3>
+                            <p><?= $row['genre'] ?></p>
+                            <p><strong>$<?= $row['price'] ?></strong></p>
+                            <a href="details.php?id=<?= $row['id'] ?>" class="btn">View Details</a>
                         </div>
                     </article>
-                    <?php
-                }
-            } else {
-                echo "<p>No games found!</p>";
-            }
-            ?>
+
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p>No games found!</p>
+            <?php endif; ?>
         </div>
     </main>
 
