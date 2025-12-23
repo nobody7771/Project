@@ -259,27 +259,196 @@ INSERT INTO games (title, genre, price, description, image_path) VALUES
 
 ---
 
-## How to Run the Project
+## How to Run the Project - Complete Blueprint
 
-### Starting the Server
+### Prerequisites Checklist
+- [ ] XAMPP installed and running
+- [ ] Project files in `htdocs` folder
+- [ ] Database created in phpMyAdmin
+- [ ] Tables created (users, games, orders, order_items)
+- [ ] Sample data inserted (optional)
 
+---
+
+### Step-by-Step Running Instructions
+
+#### Step 1: Start XAMPP Services
 1. **Open XAMPP Control Panel**
-2. **Start Apache** (click "Start" button)
-3. **Start MySQL** (click "Start" button)
-4. Both should show green "Running" status
+   - Windows: Search "XAMPP" in Start menu
+   - Mac: Open XAMPP application
+   - Linux: Run `sudo /opt/lampp/lampp start`
 
-### Accessing the Website
+2. **Start Apache Server**
+   - Click "Start" button next to Apache
+   - Wait for status to turn green "Running"
+   - If port 80 is busy, Apache will show error (change port or close conflicting program)
 
-1. Open web browser
-2. Navigate to: `http://localhost/Project-main/Home.php`
-3. Or use: `http://localhost/Project-main/` (if `Home.php` is set as index)
+3. **Start MySQL Database**
+   - Click "Start" button next to MySQL
+   - Wait for status to turn green "Running"
+   - MySQL must be running for database access
 
-### Example Commands
+4. **Verify Services**
+   - Both Apache and MySQL should show green "Running"
+   - If red, check error messages in XAMPP Control Panel
 
-**No command line needed!** This is a web application, so you just:
-- Start XAMPP services
-- Open browser
-- Navigate to the URL
+#### Step 2: Verify Project Location
+1. **Check Project Path**
+   - Windows: `C:\xampp\htdocs\Project-main\`
+   - Mac: `/Applications/XAMPP/htdocs/Project-main/`
+   - Linux: `/opt/lampp/htdocs/Project-main/`
+
+2. **Verify Files Exist**
+   - Check that `Home.php`, `db.php`, and other files are present
+   - Ensure `images/` folder exists (for game images)
+
+#### Step 3: Access the Website
+1. **Open Web Browser**
+   - Use Chrome, Firefox, Edge, or Safari
+   - Any modern browser works
+
+2. **Navigate to Home Page**
+   - Type in address bar: `http://localhost/Project-main/Home.php`
+   - Or: `http://localhost/Project-main/`
+   - Press Enter
+
+3. **Expected Result**
+   - Home page loads with game grid
+   - Navigation bar visible at top
+   - Search bar functional
+   - Games displayed (if database has data)
+
+#### Step 4: Test Basic Functionality
+1. **Browse Games**
+   - Home page should show all games
+   - Click "View Details" on any game
+
+2. **Test Search**
+   - Type in search box
+   - Games should filter as you type
+
+3. **Test Navigation**
+   - Click "Login" or "Register"
+   - Navigation should work
+
+#### Step 5: Create Admin Account (Optional)
+1. **Register Admin User**
+   - Go to Register page
+   - Username: `admin`
+   - Email: `admin@example.com`
+   - Password: (choose any password)
+   - Click Register
+
+2. **Login as Admin**
+   - Go to Login page
+   - Enter admin credentials
+   - Should redirect to admin dashboard
+
+---
+
+### Quick Start Commands
+
+**Windows:**
+```batch
+# No command line needed - use XAMPP Control Panel GUI
+```
+
+**Mac/Linux:**
+```bash
+# Start XAMPP services
+sudo /opt/lampp/lampp start
+
+# Stop XAMPP services
+sudo /opt/lampp/lampp stop
+
+# Restart services
+sudo /opt/lampp/lampp restart
+```
+
+---
+
+### Access URLs
+
+| Page | URL |
+|------|-----|
+| Home | `http://localhost/Project-main/Home.php` |
+| Login | `http://localhost/Project-main/login.php` |
+| Register | `http://localhost/Project-main/register.php` |
+| Cart | `http://localhost/Project-main/cart.php` |
+| Admin | `http://localhost/Project-main/admin.php` |
+
+---
+
+### Troubleshooting Running Issues
+
+#### Issue: Apache Won't Start
+**Problem**: Port 80 already in use  
+**Solution**: 
+- Close Skype or other programs using port 80
+- Or change Apache port in XAMPP config
+- Or use port 8080: `http://localhost:8080/Project-main/Home.php`
+
+#### Issue: MySQL Won't Start
+**Problem**: Port 3306 already in use  
+**Solution**:
+- Close other MySQL instances
+- Check if MySQL service is already running
+- Restart computer if needed
+
+#### Issue: Page Shows "Connection Failed"
+**Problem**: Database not connected  
+**Solution**:
+- Verify MySQL is running (green in XAMPP)
+- Check database name in `db.php` matches your database
+- Verify database exists in phpMyAdmin
+
+#### Issue: "404 Not Found"
+**Problem**: Wrong file path  
+**Solution**:
+- Verify project is in `htdocs` folder
+- Check URL spelling (case-sensitive on Linux/Mac)
+- Ensure file names match exactly
+
+#### Issue: Blank White Page
+**Problem**: PHP error  
+**Solution**:
+- Check XAMPP error logs
+- Enable error display in PHP
+- Verify all files are present
+- Check for syntax errors
+
+---
+
+### Development Workflow
+
+1. **Make Code Changes**
+   - Edit PHP files in your editor
+   - Save files
+
+2. **Refresh Browser**
+   - Press F5 or Ctrl+R to reload page
+   - Changes appear immediately (no restart needed)
+
+3. **Check Errors**
+   - Browser console (F12) for JavaScript errors
+   - XAMPP error logs for PHP errors
+   - phpMyAdmin for database issues
+
+4. **Test Functionality**
+   - Test each feature after changes
+   - Clear browser cache if CSS/JS not updating
+
+---
+
+### Production Deployment Notes
+
+**For Learning/Development**: Current setup is fine  
+**For Production**: 
+- Change database credentials
+- Use prepared statements (security)
+- Add error handling
+- Enable HTTPS
+- Use production web server (not XAMPP)
 
 ---
 

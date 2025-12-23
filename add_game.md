@@ -54,11 +54,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $target_file = $target_dir . basename($image_name);
 ```
 **Explanation:**
-- `$_FILES['image']`: PHP superglobal for uploaded files
-- `['name']`: Gets original filename
-- `$target_dir`: Directory where images are saved
-- `basename()`: Gets just filename (removes path)
-- `$target_file`: Full path where image will be saved
+- `$_FILES['image']`: 
+  - **Breaking this down**:
+    1. `$_FILES` → PHP superglobal array containing uploaded files
+    2. `['image']` → Gets file from form field named "image"
+    3. This is a nested array with file information
+  - **Structure**: `$_FILES['image']` contains:
+    - `['name']` → Original filename (e.g., "game.jpg")
+    - `['tmp_name']` → Temporary file location
+    - `['size']` → File size in bytes
+    - `['type']` → File MIME type (e.g., "image/jpeg")
+- `$image_name = $_FILES['image']['name']`: 
+  - Gets the original filename user uploaded
+  - **Example**: If user selected "my-game.jpg", `$image_name` = "my-game.jpg"
+- `$target_dir = "images/"`: 
+  - Directory where we want to save the image
+  - **Important**: This folder must exist and be writable
+- `basename($image_name)`: 
+  - **Breaking this down**:
+    1. `basename()` → PHP function that extracts filename from path
+    2. Removes directory path, keeps only filename
+  - **Why needed**: 
+    - User might upload: "C:\Users\John\Pictures\game.jpg"
+    - We only want: "game.jpg"
+    - Prevents security issues with paths
+  - **Example**: 
+    - Input: "C:\Users\John\game.jpg" → Output: "game.jpg"
+    - Input: "game.jpg" → Output: "game.jpg"
+- `$target_file = $target_dir . basename($image_name)`: 
+  - **Breaking this down**:
+    1. `.` → String concatenation (joins strings)
+    2. `$target_dir` → "images/"
+    3. `basename($image_name)` → "game.jpg"
+    4. Result: "images/game.jpg"
+  - **Final path**: Where the file will be permanently saved
 
 ### Block 5: Move Uploaded File
 ```php
@@ -66,10 +95,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
 ```
 **Explanation:**
-- `move_uploaded_file()`: Moves file from temporary location to permanent location
-- `$_FILES['image']['tmp_name']`: Temporary file location (PHP creates this)
-- `$target_file`: Destination path
-- Returns true if successful, false if failed
+- `move_uploaded_file()`: 
+  - **Breaking this down**:
+    1. PHP function that moves uploaded file
+    2. Takes two parameters: source path, destination path
+    3. Moves file from temporary location to permanent location
+    4. Returns `true` if successful, `false` if failed
+  - **Why "move" not "copy"**: 
+    - Temporary files are deleted automatically
+    - We move it to save it permanently
+- `$_FILES['image']['tmp_name']`: 
+  - **Breaking this down**:
+    1. `$_FILES['image']` → Gets the uploaded file array
+    2. `['tmp_name']` → Gets temporary file path
+    3. PHP automatically stores uploaded file in temp directory
+  - **Example temp path**: 
+    - Windows: `C:\xampp\tmp\phpABC123.tmp`
+    - Linux: `/tmp/phpABC123.tmp`
+  - **Why temporary**: 
+    - PHP stores uploads temporarily
+    - We must move it before script ends
+    - Temp files are deleted automatically
+- `$target_file`: 
+  - Destination path where file should be saved
+  - **Example**: "images/game.jpg"
+- `if (move_uploaded_file(...))`: 
+  - Checks if move was successful
+  - If `true` → File moved successfully → Continue with database save
+  - If `false` → File move failed → Show error message
 
 ### Block 6: Save to Database
 ```php
